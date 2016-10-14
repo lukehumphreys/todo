@@ -55,7 +55,8 @@ func main() {
 func print(lines []string, err error) {
 
 	if err != nil {
-		stdErr.Fatalf("error: %v\n", err)
+		msg := Red(fmt.Sprintf("error: %v\n", err))
+		stdErr.Fatal(msg)
 	}
 
 	for _, line := range lines {
@@ -74,7 +75,9 @@ func list(todos *Todos, args []string) ([]string, error) {
 
 	lines := []string{}
 	for _, todo := range todos.List() {
-		lines = append(lines, fmt.Sprintf("[%d] %s", todo.Id, todo.Message))
+		id := Blue(fmt.Sprintf("[%d] ", todo.Id))
+		msg := Green(todo.Message)
+		lines = append(lines, id + msg)
 	}
 	return lines, nil
 }
@@ -114,7 +117,7 @@ func done(todos *Todos, args []string) ([]string, error) {
 func help(*Todos, []string) ([]string, error) {
 
 	lines := []string{
-		">> super simple TODO list manager <<",
+		Green(">> super simple TODO list manager <<"),
 		"",
 		Blue("  todo <TODO>    ") + "adds <TODO>",
 		Blue("  todo list      ") + "lists TODOs",
