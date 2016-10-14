@@ -13,6 +13,6 @@ Super simple TODO command line manager
 ## install
 
  - install [go](https://golang.org/dl/)
- - `go install` install todo
- - `todo my first task`
- - `todo list`
+ - set `GOPATH` example: `export GOPATH=$HOME/Documents/go`
+ - clonde this project to `$GOPATH/src/github.com/reisinger/todo`
+ - run in that directory `go install`, now `todo` command should be available
