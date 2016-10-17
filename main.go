@@ -18,6 +18,7 @@ func init() {
 
 	options["list"] = list
 	options["edit"] = edit
+	options["swap"] = swap
 	options["done"] = done
 	options["help"] = help
 
@@ -98,6 +99,25 @@ func edit(todos *Todos, args []string) ([]string, error) {
 	return []string{"ok"}, nil
 }
 
+func swap(todos *Todos, args []string) ([]string, error) {
+
+	id1, err := getId(args)
+	if err != nil {
+		return []string{}, fmt.Errorf("command needs 2 task ids as arguments")
+	}
+
+	id2, err := getId(args[1:])
+	if err != nil {
+		return []string{}, fmt.Errorf("command needs 2 task ids as arguments")
+	}
+
+	err =todos.Swap(id1, id2)
+	if err != nil {
+		return []string{}, err
+	}
+	return []string{"ok"}, err
+}
+
 func done(todos *Todos, args []string) ([]string, error) {
 
 	id, err := getId(args)
@@ -119,11 +139,12 @@ func help(*Todos, []string) ([]string, error) {
 	lines := []string{
 		Green(">> super simple TODO list manager <<"),
 		"",
-		Blue("  todo <TODO>    ") + "adds <TODO>",
-		Blue("  todo list      ") + "lists TODOs",
-		Blue("  todo edit <id> ") + "edit/override TODO with specified id",
-		Blue("  todo done <id> ") + "remove TODO with specified id",
-		Blue("  todo help      ") + "prints this message",
+		Blue("  todo <TODO>         ") + "adds <TODO>",
+		Blue("  todo list           ") + "lists TODOs",
+		Blue("  todo edit <id>      ") + "edit/override TODO",
+		Blue("  todo swap <id> <id> ") + "swaps specified TODOs",
+		Blue("  todo done <id>      ") + "remove TODO from the list",
+		Blue("  todo help           ") + "prints this message",
 		"",
 	}
 	return lines, nil

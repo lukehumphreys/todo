@@ -83,6 +83,17 @@ func (t *Todos) Get(id int) (*Todo, error) {
 	return nil, fmt.Errorf("todo %d not found", id)
 }
 
+func (t *Todos) Swap(id1, id2 int) (error) {
+
+	max := len(t.Todos) - 1
+	if (id1 < 0 || id2 < 0) || (id1 > max || id2 > max) {
+		return fmt.Errorf("invalid id, id needs to be between %d - %d", 0, max)
+	}
+
+	t.Todos[id1], t.Todos[id2] = t.Todos[id2], t.Todos[id1]
+	return nil
+}
+
 func (t *Todos) Save(stdErr *log.Logger) {
 
 	ts := []Todo{}
