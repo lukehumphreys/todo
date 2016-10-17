@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"errors"
 )
 
 var options = make(map[string]action)
@@ -20,6 +21,7 @@ func init() {
 	options["edit"] = edit
 	options["swap"] = swap
 	options["done"] = done
+	options["pop"]  = pop
 	options["help"] = help
 
 	stdErr = log.New(os.Stderr, "", 0)
@@ -134,6 +136,15 @@ func done(todos *Todos, args []string) ([]string, error) {
 	return []string{"ok"}, err
 }
 
+func pop(todos *Todos, args []string) ([]string, error) {
+
+	if len(todos.Todos) == 0 {
+		return []string{}, errors.New("nothing to remove, no todos")
+	}
+
+	return done(todos, []string{"0"})
+}
+
 func help(*Todos, []string) ([]string, error) {
 
 	lines := []string{
@@ -144,6 +155,7 @@ func help(*Todos, []string) ([]string, error) {
 		Blue("  todo edit <id>      ") + "edit/override TODO",
 		Blue("  todo swap <id> <id> ") + "swaps specified TODOs",
 		Blue("  todo done <id>      ") + "remove TODO from the list",
+		Blue("  todo pop            ") + "removes first TODO (same as 'todo done 0')",
 		Blue("  todo help           ") + "prints this message",
 		"",
 	}
