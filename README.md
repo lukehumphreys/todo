@@ -4,11 +4,13 @@ Super simple TODO command line manager
 
 ## usage
 
- - `todo <TODO>`    adds <TODO>
- - `todo list`      lists TODOs
- - `todo edit <id>` edit/override TODO with specified id
- - `todo done <id>` remove TODO with specified id
- - `todo help`      prints help
+ - `todo <TODO>`         adds <TODO>
+ - `todo list`           lists TODOs
+ - `todo edit <id>`      edit/override TODO
+ - `todo swap <id> <id>` swaps specified TODOs
+ - `todo done <id>`      remove TODO from the list
+ - `todo pop`            removes first TODO (same as 'todo done 0')
+ - `todo help`           prints help
  
 ## install
 
